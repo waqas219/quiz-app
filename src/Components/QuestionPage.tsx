@@ -1,29 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { questionPropsType } from '../Types/quiz-type';
 
 const QuestionPage: React.FC<questionPropsType> = ({ question, options, callback }) => {
-    console.log(question, options)
+    let [selectedAns, setSelectedAns] = useState("");
+    const handleSelection = (ev:any) => {
+        setSelectedAns(ev.target.value);
+    }
     return (
         <div className='question-container'>
             <div className='question'>
                 {question}
             </div>
-            <form onSubmit={callback}>
+            <form onSubmit={(e:React.FormEvent<EventTarget>)=>callback(e, selectedAns)} 
+                className='question-form'>
                 {
         
                     options.map((opt:string, ind:number)=>{
                         return (
                             <div key={ind}>        
-                                <label>
-                                     <input
-                                        type='radio' name="opt" value={opt} />
-                                        {opt}
+                                <label className="radio">
+                                    <input type='radio' 
+                                      name="opt" 
+                                      required
+                                      value={opt}
+                                      checked={selectedAns === opt} 
+                                      onChange={handleSelection}
+                                    />
+                                    {opt}
+    
                                 </label>
                              </div>
                         )
                     })
                 }
-                <input type='submit' />
+                <input type='submit' className='submit' />
             </form>
         </div>
     )

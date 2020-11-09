@@ -12,6 +12,7 @@ export const getQuizDetails = async (totalQuestions: number, level: string): Pro
         return {
             question: questionObj.question,
             answer: questionObj.correct_answer,
+            correct_answer: questionObj.correct_answer,
             option: shufflearray(questionObj.incorrect_answers.concat(questionObj.correct_answer))
         }
     })
